@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rushes — Packages</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0a0a0a;
+      --card-bg:     #111111;
+      --card-border: #1e1e1e;
+      --rec-bg:      #0b1628;
+      --rec-border:  #2563EB;
+      --text:        #f0f0f0;
+      --muted:       #7a7a7a;
+      --dim:         #343434;
+      --accent:      #2563EB;
+      --green:       #22c55e;
+      --red:         #ef4444;
+      --section-div: #181818;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* ============================================================
+       SECTION 1 — HERO
+    ============================================================ */
+    .s1 {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      padding: 110px 72px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* subtle radial glow top-right */
+    .s1::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 600px 500px at 85% 10%, rgba(37,99,235,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .s1-inner { max-width: 1060px; margin: 0 auto; width: 100%; }
+
+    .eyebrow {
+      font-size: 10.5px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 400;
+      margin-bottom: 30px;
+      opacity: 0;
+      animation: rise 0.85s ease 0.15s forwards;
+    }
+
+    .s1-h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(58px, 10vw, 116px);
+      line-height: 0.92;
+      letter-spacing: 0.015em;
+      color: var(--text);
+      max-width: 880px;
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: rise 0.85s ease 0.35s forwards;
+    }
+
+    .s1-h1 .faded { color: var(--dim); }
+
+    .s1-sub {
+      font-size: clamp(14px, 1.6vw, 17px);
+      color: var(--muted);
+      max-width: 490px;
+      line-height: 1.75;
+      font-weight: 300;
+      opacity: 0;
+      animation: rise 0.85s ease 0.55s forwards;
+    }
+
+    /* ============================================================
+       SECTION 2 — THE EDIT
+    ============================================================ */
+    .s2 {
+      padding: 130px 72px;
+      border-top: 1px solid var(--section-div);
+    }
+
+    .s2-inner { max-width: 1060px; margin: 0 auto; }
+
+    .stag {
+      font-size: 10.5px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--dim);
+      font-weight: 400;
+      margin-bottom: 60px;
+    }
+
+    .s2-display { margin-bottom: 72px; }
+
+    .dline {
+      display: block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(42px, 6.8vw, 78px);
+      line-height: 1.0;
+      letter-spacing: 0.02em;
+    }
+    .dline.on  { color: var(--text); }
+    .dline.off { color: var(--dim); }
+
+    .s2-gap { height: 40px; }
+
+    .instead-label {
+      font-size: 10.5px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 400;
+      margin-bottom: 22px;
+    }
+
+    .s2-prose p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.85;
+      margin-bottom: 14px;
+      max-width: 520px;
+    }
+    .s2-prose p:last-child { margin-bottom: 0; }
+    .s2-prose strong { color: var(--text); font-weight: 500; }
+
+    /* ============================================================
+       SECTION 3 — PACKAGES
+    ============================================================ */
+    .s3 {
+      padding: 130px 72px;
+      border-top: 1px solid var(--section-div);
+    }
+
+    .s3-inner { max-width: 1060px; margin: 0 auto; }
+
+    .s3-head { margin-bottom: 68px; }
+
+    .s3-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(48px, 6.5vw, 78px);
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+
+    /* ── GRID ── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    /* ── BASE CARD ── */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 30px 26px 32px;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+    .card:hover { border-color: #2a2a2a; }
+
+    /* ── FEATURED CARD ── */
+    .card.rec {
+      border: 2px solid var(--rec-border);
+      background: var(--rec-bg);
+      padding-top: 46px;
+    }
+
+    .rec-badge {
+      position: absolute;
+      top: -13px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg);
+      border: 1px solid var(--rec-border);
+      color: var(--accent);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 3px 14px;
+      border-radius: 100px;
+      white-space: nowrap;
+      font-weight: 400;
+    }
+
+    /* ── CARD CONTENT ── */
+    .card-tier {
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 400;
+      margin-bottom: 14px;
+    }
+
+    .card-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 58px;
+      line-height: 1;
+      letter-spacing: 0.01em;
+      color: var(--text);
+    }
+    .card-price .mo {
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 300;
+      letter-spacing: 0;
+    }
+
+    .card-meta {
+      font-size: 12px;
+      color: var(--dim);
+      margin-top: 5px;
+      margin-bottom: 22px;
+    }
+
+    .card-hr {
+      height: 1px;
+      background: var(--card-border);
+      margin-bottom: 22px;
+    }
+    .card.rec .card-hr { background: #1b3063; }
+
+    /* ── FEATURE LIST ── */
+    .feats { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+
+    .feat {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .feat.bright { color: #cad5e8; }
+
+    .feat svg {
+      flex-shrink: 0;
+      width: 15px;
+      height: 15px;
+      margin-top: 2px;
+    }
+    .feat .ck { color: var(--green); }
+    .feat .cx { color: var(--red); opacity: 0.65; }
+
+    /* ── TRIAL NOTE ── */
+    .trial {
+      margin-top: 52px;
+      padding-top: 34px;
+      border-top: 1px solid var(--section-div);
+      font-size: 13px;
+      color: var(--dim);
+    }
+    .trial strong { color: var(--muted); font-weight: 400; }
+
+    /* ============================================================
+       ANIMATIONS
+    ============================================================ */
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 860px) {
+      .s1, .s2, .s3 { padding-left: 28px; padding-right: 28px; }
+      .cards { grid-template-columns: 1fr; max-width: 390px; }
+    }
+
+    @media (max-width: 480px) {
+      .s1 { padding-top: 80px; padding-bottom: 80px; }
+      .s2, .s3 { padding-top: 90px; padding-bottom: 90px; }
+      .s1-h1 { font-size: 54px; }
+      .dline  { font-size: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ──────────────────────────────────────────────
+     SECTION 1 — HERO
+────────────────────────────────────────────── -->
+<section class="s1">
+  <div class="s1-inner">
+
+    <p class="eyebrow">Rushes</p>
+
+    <h1 class="s1-h1">
+      Your Content<br>
+      Already Has<br>
+      Potential.<br>
+      <span class="faded">Let's Make It<br>Unforgettable.</span>
+    </h1>
+
+    <p class="s1-sub">
+      Whether you're a makeup artist, creator, or business owner, premium editing helps your content reflect the quality of your work.
+    </p>
+
+  </div>
+</section>
+
+
+<!-- ──────────────────────────────────────────────
+     SECTION 2 — THE EDIT
+────────────────────────────────────────────── -->
+<section class="s2">
+  <div class="s2-inner">
+
+    <p class="stag">The Edit</p>
+
+    <div class="s2-display">
+      <span class="dline on">Short.</span>
+      <span class="dline off">Not motivational.</span>
+      <span class="dline off">Not "Choose the right path."</span>
+      <span class="dline off">Not "Take action today."</span>
+    </div>
+
+    <div class="s2-gap"></div>
+
+    <p class="instead-label">Instead</p>
+
+    <div class="s2-prose">
+      <p>You've already invested hours creating content. The filming, the preparation, the creativity, the effort.</p>
+      <p><strong>The edit is what brings it all together.</strong></p>
+      <p>Because premium work deserves premium presentation.</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ──────────────────────────────────────────────
+     SECTION 3 — PACKAGES
+────────────────────────────────────────────── -->
+<section class="s3">
+  <div class="s3-inner">
+
+    <div class="s3-head">
+      <p class="stag">Simple Pricing</p>
+      <h2 class="s3-title">Packages</h2>
+    </div>
+
+    <div class="cards">
+
+      <!-- ── STARTER ── -->
+      <div class="card">
+        <p class="card-tier">Starter</p>
+        <div class="card-price">₹3,500<span class="mo">/mo</span></div>
+        <p class="card-meta">6 reels · ₹583 per reel</p>
+        <div class="card-hr"></div>
+        <ul class="feats">
+          <li class="feat">
+            <svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Clean cuts
+          </li>
+          <li class="feat">
+            <svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Audio sync
+          </li>
+          <li class="feat">
+            <svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Color correction
+          </li>
+          <li class="feat">
+            <svg class="cx" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+            No motion graphics
+          </li>
+        </ul>
+      </div>
+
+      <!-- ── GROWTH (RECOMMENDED) ── -->
+      <div class="card rec">
+        <div class="rec-badge">Recommended</div>
+        <p class="card-tier">Growth</p>
+        <div class="card-price">₹7,000<span class="mo">/mo</span></div>
+        <p class="card-meta">12 reels · ₹583 per reel</p>
+        <div class="card-hr"></div>
+        <ul class="feats">
+          <li class="feat bright">
+            <svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Everything in Starter
+          </li>
+          <li class="feat bright">
+            <svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Smooth transitions
+          </li>
+          <li class="feat bright">
+            <svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Text animations
+          </li>
+          <li class="feat bright">
+            <svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Captions
+          </li>
+          <li class="feat bright">
+            <svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Sound design
+          </li>
+          <li class="feat bright">
+            <svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            1 revision per reel
+          </li>
+        </ul>
+      </div>
+
+      <!-- ── PREMIUM ── -->
+      <div class="card">
+        <p class="card-tier">Premium</p>
+        <div class="card-price">₹12,000<span class="mo">/mo</span></div>
+        <p class="card-meta">12 reels · ₹1,000 per reel</p>
+        <div class="card-hr"></div>
+        <ul class="feats">
+          <li class="feat">
+            <svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Everything in Growth
+          </li>
+          <li class="feat">
+            <svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Motion graphics
+          </li>
+          <li class="feat">
+            <svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Educational content
+          </li>
+          <li class="feat">
+            <svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Promotional reels
+          </li>
+          <li class="feat">
+            <svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Custom branding
+          </li>
+          <li class="feat">
+            <svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Priority delivery
+          </li>
+        </ul>
+      </div>
+
+    </div><!-- /cards -->
+
+    <p class="trial">
+      <strong>Trial offer:</strong> first reel free — no commitment. Push this to close faster.
+    </p>
+
+  </div>
+</section>
+
+</body>
+</html>
